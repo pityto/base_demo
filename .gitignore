@@ -1,0 +1,9 @@
+/config/database.yml
+/config/puma.rb
+/tmp/cache/*
+/tmp/pids/*
+.rvmrc
+/log/*
+.tags
+.tags_sorted_by_file
+.DS_Store
