@@ -1,0 +1,73 @@
+<div class="ui grid">
+  <div class="left floated fourteen wide column">
+    <h2><a href="javascript:history.back()"><i class="blue reply icon"></i></a>新增员工</h2>
+  </div>
+</div>
+<%= render 'form', url: admin_employees_path, meth: :post %>
+<% content_for :scripts do%>
+  <script type="text/javascript">
+    //验证表单
+    $("#new_employee").form({
+      inline : true,
+      fields: {
+        name: {
+          identifier: 'employee[name]',
+          rules: [{
+            type: 'empty',
+            prompt: '请输入姓名'
+          }]
+        },
+        email: {
+          identifier: 'employee[email]',
+          rules: [{
+            type: 'email',
+            prompt: '请输入合法的email'
+          }]
+        },
+        password: {
+          identifier: 'employee[password]',
+          rules: [{
+            type: 'empty',
+            prompt: '请输入密码'
+          }, {
+            type: 'minLength[6]',
+            prompt: '密码不能小于6位'
+          }]
+        },
+        password_confirmation: {
+          identifier: 'employee[password_confirmation]',
+          rules: [{
+            type: 'match[employee[password]]',
+            prompt: '两次输入密码不一致'
+          }]
+        }
+      }
+    });
+
+    $("#employee_department_id").change(function(){
+      var id = $(this).val();
+      if(id != ''){
+        $.get('/admin/hr/departments/'+ id +'/get_sub_departments', {}, function(response){
+          $("#employee_deputy_department_id").html('');
+          $("#employee_position_id").html('');
+          $.each(response.sub_departments, function(){
+            $("#employee_deputy_department_id").append("<option value='"+ this.id +"'>"+ this.name +"</option>");
+          });
+          $.each(response.positions, function(){
+            $("#employee_position_id").append("<option value='"+ this.position_id +"'>"+ this.position_name +"</option>");
+          });
+        });
+      }
+    });
+
+
+      $("#employee_position_id").on('change',function(){
+        if($(this).val()=='matching_trader' || $(this).val()=='sourcing_trader' ){
+          $("#trader_grade_div").show()
+        }else{
+          $("#trader_grade_div").hide()
+          $("#employee_trader_grade").val(0)
+        }
+      })
+  </script>
+<% end %>

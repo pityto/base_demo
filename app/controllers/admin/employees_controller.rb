@@ -16,7 +16,6 @@ class Admin::EmployeesController < Admin::BaseController
   def new
     @html_title =  "New employee"
     @employee =  Employee.new
-    render :layout => false
   end
 
   def edit
@@ -53,22 +52,19 @@ class Admin::EmployeesController < Admin::BaseController
   end
 
   def create
-    @employee = Employee.new
-    @employee.attributes = permitted_resource_params
+    file = employee_params[:avatar]
+    if file.present? && file.content_type !~ /^image/
+      flash[:msg] = '头像图片格式不正确(gif,jpg,png)。'
+      redirect_back fallback_location: {action: :new}
+      return
+    end
+    @employee = Employee.new(permitted_resource_params)
     if @employee.save
-      flash[:success] = flash_message_for(@employee, :successfully_created)
-      respond_with(@employee) do |format|
-        format.html { redirect_to location_after_save }
-        format.js   { render :layout => false }
-      end
+      flash[:notice] = '添加成功'
+      redirect_to action: :edit, id: @employee.id
     else
-      respond_with(@employee) do |format|
-        format.html do
-          flash.now[:error] = @employee.errors.full_messages.join(", ")
-          render action: 'new'
-        end
-        format.js { render layout: false }
-      end
+      flash[:msg] = @employee.errors.full_messages.join(',')
+      redirect_back fallback_location: {action: :new}
     end
   end
 

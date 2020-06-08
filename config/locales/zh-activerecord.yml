@@ -1,0 +1,41 @@
+zh:
+  attributes:
+    
+  views:
+    submit: '提交'
+  activerecord:
+    models:  #pagination 中的entry name
+      staple:
+        one: '溶剂报价'
+        other: '溶剂报价'
+      staple_company:
+        one: '溶剂供应商'
+        other: '溶剂供应商'
+      finance_payment_detail:
+        one: '应付明细'
+        other: '应付明细'
+    attributes:
+      employee:
+        email: '邮箱'
+        password: '密码'
+        password_confirmation: '确认密码'
+        name: '姓名'
+        department_id: '主部门'
+        deputy_department_id: '副部门'
+        position_id: '职位'
+        position_level: '行政级别'
+        joined_on: '入职日期'
+        parent_id: 上级
+        gender: '性别'
+        mobile: '手机'
+        qq: 'QQ'
+        office_tel: '座机'
+        dob: '生日'
+        avatar: 头像
+        weight: 权重
+        trader_grade: 撮合等级
+      role:
+        name: '名称(英文)'
+        name_cn: '名称(中文)'
+
+

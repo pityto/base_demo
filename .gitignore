@@ -1,7 +1,6 @@
 /config/database.yml
 /config/puma.rb
-/tmp/cache/*
-/tmp/pids/*
+/tmp/*
 .rvmrc
 /log/*
 .tags

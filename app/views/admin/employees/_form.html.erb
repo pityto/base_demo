@@ -1,0 +1,63 @@
+<div class="ui two column grid">
+  <div class="row">
+    <div class="column">
+      <%= simple_form_for @employee, url: url, method: meth do |f| %>
+        <div class="ui blue segment">
+          <div class="two fields">
+            <%= f.input :name %>
+            <%= f.input :email %>
+          </div>
+          <div class="two fields">
+            <%= f.input :password, as: :password %>
+            <%= f.input :password_confirmation, as: :password %>
+          </div>
+          <div class="two fields">
+            <%= f.input :mobile %>
+            <%= f.input :office_tel %>
+          </div>
+
+          <% if current_employee.admin? %>
+            <div class="two fields">
+              <%= f.input :department_id, as: :select, collection: Department.options_for_select, include_blank: '选择主部门', input_html: {class: 'ui dropdown fluid'} %>
+              <%= f.input :deputy_department_id, as: :select, collection: @deputy_dep_options || {}, include_blank: '选择副部门', input_html: {class: 'ui dropdown fluid'} %>
+            </div>
+            <div class="two fields">
+              <%= f.input :position_id, as: :select, collection: @position_options || {'其他' => 'other_position'}, include_blank: false, input_html: {class: 'ui dropdown fluid'} %>
+              <%= f.input :position_level, as: :select, collection: select_options_from_enum(Employee, :position_level), include_blank: false, input_html: {class: 'ui dropdown fluid'} %>
+            </div>
+          <% else %>
+            <div class="two fields">
+            </div>
+            <div class="two fields">
+              <%= f.input :position_id, as: :select, collection: @position_options || {'其他' => 'other_position'}, include_blank: false, input_html: {class: 'ui dropdown fluid', disabled: 'disabled'} %>
+              <%= f.input :position_level, as: :select, collection: select_options_from_enum(Employee, :position_level), include_blank: false, input_html: {class: 'ui dropdown fluid', disabled: 'disabled'} %>
+            </div>
+          <% end %>
+          <div class="two fields">
+            <%= f.input :parent_id, as: :select, collection: Employee.get_all_with_options, include_blank: '选择上级', input_html: {class: 'ui search dropdown fluid'} %>
+            <%= f.input :joined_on, as: :string, input_html: {onfocus: "(this.type='date')", onblur: "(this.type='text')"} %>
+          </div>
+          <div class="two fields">
+            <%= f.input :qq %>
+            <%= f.input :dob, as: :string, input_html: {onfocus: "(this.type='date')", onblur: "(this.type='text')"} %>
+          </div>
+          <div class="two fields">
+            <%= f.input :avatar %>
+            <%= f.input :weight %>
+          </div>
+        </div>
+        <div class="footer_btn">
+          <%= f.submit '提交', class: 'ui blue mini button' %>
+        </div>
+      <% end %>
+    </div>
+    <div class="column">
+      <div class="two eight wide field" style="text-align:center">
+        <% if @employee.avatar.present? %>
+          <%= image_tag @employee.avatar, class: 'ui circular image', style: 'width: 300px;height:300px' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
