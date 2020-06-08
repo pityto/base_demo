@@ -15,6 +15,9 @@ module PreReport
     config.time_zone = 'Beijing'
     config.i18n.default_locale = :zh
     config.autoload_paths += Dir["#{config.root}/lib"]
+    Dir[Rails.root.join('config/routes/*.rb')].sort.each do  |f|
+      config.paths["config/routes.rb"].push(f)
+    end
   end
 end
 
