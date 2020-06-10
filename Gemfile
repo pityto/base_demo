@@ -33,6 +33,7 @@ gem 'roo'
 # Login & Authority
 gem 'devise', git: 'https://github.com/plataformatec/devise.git'
 gem 'cancancan'
+gem 'rolify'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -55,6 +56,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'pry'
+  gem 'pry-rails'
 end
 
 group :development do

@@ -1,0 +1,4 @@
+$('#show_show_role_modal_<%= @role.id %>').modal('setting').modal('hide');
+$("#show_role_modal_<%= @role.id %>").remove();
+$('body').append('<div class="ui modal" id="show_role_modal_<%= @role.id %>"><%= j(render 'show') %></div>');
+$('#show_role_modal_<%= @role.id %>').modal('setting').modal('show');

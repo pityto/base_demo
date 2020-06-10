@@ -1,0 +1,6 @@
+<h2 class="ui dividing header">编辑 <%= @role.name_cn %> <%= @role.id %></h2>
+<%= render 'form', role: @role, url: admin_hr_role_path(@role), meth: :put %>
+<div class="actions">
+  <div class="ui button cancel">取消</div>
+  <div class="ui blue button" onclick="submit_form()">确定</div>
+</div>

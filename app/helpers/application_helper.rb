@@ -37,4 +37,33 @@ module ApplicationHelper
     mappings.map{|k, v| [v, k.to_s] }
   end
 
+  def link_to_with_permissions(name = nil, options = nil, html_options = nil, &block)
+    html_options, options, name = options, name, block if block_given?
+    options ||= {}
+    entity = html_options.delete(:entity)
+    entity.current_employee = current_employee if entity.respond_to?(:current_employee)
+    entity.current_ability = current_ability if entity.respond_to?(:current_ability)
+
+    active_class = html_options.delete(:active_class)
+    html_options = convert_options_to_data_attributes(options, html_options)
+
+    url = url_for(options)
+    html_options['href'] ||= url
+    method = html_options['data-method'].present?? html_options['data-method'] : 'get'
+    r = Rails.application.routes.recognize_path(url, method: method, subdomain: 'www')
+    if active_class.present? && controller_path  == r[:controller]
+      html_options['class'] = "#{html_options['class']} #{active_class}".strip
+    end
+    auth_controller_name = ::Service::PermissionUtils.convert_controller_name(r[:controller])
+    auth_action_name = ::Service::PermissionUtils.convert_action_name(r[:action])
+    if ::Service::PermissionUtils.need_check_permission(auth_controller_name)
+      if can?(auth_action_name.to_sym, auth_controller_name)
+        if entity.blank? || can?(auth_action_name.to_sym, entity)
+          content_tag(:a, name || url, html_options, &block)
+        end
+      end
+    else
+      content_tag(:a, name || url, html_options, &block)
+    end
+  end
 end

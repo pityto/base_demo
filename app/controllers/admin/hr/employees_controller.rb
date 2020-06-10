@@ -117,5 +117,8 @@ class Admin::Hr::EmployeesController < Admin::BaseController
     @employee = Employee.find(params[:id])
   end
 
+  def current_user
+    current_employee
+  end
 
 end

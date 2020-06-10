@@ -1,4 +1,5 @@
 class Employee < ApplicationRecord
+  rolify
   devise :database_authenticatable, :rememberable, :trackable
          #:recoverable, :registerable, :validatable
 

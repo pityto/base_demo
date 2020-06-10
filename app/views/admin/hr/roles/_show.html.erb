@@ -1,0 +1,20 @@
+<i class="close icon"></i>
+<h2 class="ui dividing header">Role角色下的员工列表</h2>
+<form>
+  <table class="ui selectable striped celled table">
+  <tbody>
+  <% @role.employees.each_with_index do |emp, i| %>
+    <% if i == 0 %><tr>
+    <%elsif (i % 4)== 0 %></tr><tr><%end%>
+        <td>
+          <span class="ui label basic compacted"><%= emp.name %></span>
+        </td>
+  <% end %>
+  </tr>
+  </tbody>
+</table>
+</form>
+<div class="actions">
+  <div class="ui button cancel">取消</div>
+</div>
+

@@ -1,0 +1,55 @@
+<div class="ui grid">
+  <div class="left floated fourteen wide column">
+    <h2><a href="javascript:history.back()"><i class="blue reply icon"></i></a>名称:  <%= @role.name_cn %></h2>
+  </div>
+</div>
+<div class="ui blue segment">
+  <%= simple_form_for [@role_permission], url: update_permission_admin_hr_role_path(@role), method: :post do |f| %>
+      <table class="ui selectable structured celled table">
+        <thead>
+        <tr >
+          <th class="center aligned" width="15%">菜单</th>
+          <th class="center aligned" width="15%">功能</th>
+          <th class="center aligned">操作权限</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @menus.each do |menu| %>
+          <% functions = @permissions.select{ |p| p.controller =~ /^#{menu}/ }.group_by{ |f| f.controller } %>
+            <tr>
+              <td class="center aligned" rowspan="<%= functions.length + 1 %>"><%= t "permissions.menu.#{menu.gsub("/",'.')}", default: menu %></td>
+            </tr>
+            <% functions.each do |function, actions| %>
+            <tr>
+              <td class="center aligned"><%= t "permissions.controller.#{function.gsub("/",'.')}", default: function %></td>
+              <td class="left aligned">
+                <% actions.sort{ |a,b| Permission.compare(a,b) }.each do |action| %>
+                    <div class="ui checkbox">
+                      <input type="checkbox" name="permission_id[]" value="<%= action.id %>">
+                      <label><%=
+                        t "permissions.operate.#{action.controller.gsub('/','.')}.#{action.action}", default: (t 'permissions.operate.' + action.action, default: action.action) %></label>
+                    </div>
+                <% end %>
+              </td>
+            </tr>
+            <% end %>
+        <% end %>
+        
+        </tbody>
+      </table>
+      <div class="actions" style="text-align: right">
+        <%= f.button :submit, value: '保存' %>
+      </div>
+  <% end %>
+</div>
+<% content_for :scripts do%>
+    <script type="text/javascript">
+      $(function(){
+        var selected_permission_ids = "<%= @selected_permission_ids %>";
+        selected_permission_ids = selected_permission_ids.split(",");
+        for(var i=0;i < selected_permission_ids.length;i++){
+          $(":checkbox[name^='permission_id'][value='"+ selected_permission_ids[i] +"']").prop("checked", true);
+        }
+      });
+    </script>
+<% end %>

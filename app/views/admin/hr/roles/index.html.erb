@@ -1,0 +1,41 @@
+<div class="ui grid">
+  <div class="left floated fourteen wide column">
+    <h2><a href="javascript:history.back()"><i class="blue reply icon"></i></a>角色和权限管理</h2>
+  </div>
+</div>
+<div class="ui blue segment">
+  <%= simple_form_for @q, url: admin_hr_roles_path, method: :get, wrapper: 'semantic_search_form' do |f| %>
+      <div class="ui five column grid">
+        <%= f.input 'name_cn-like', placeholder: '输入名称' %>
+        <div class="column">
+          <%= f.submit '搜索', class: 'ui primary button' %>
+          <%= link_to_with_permissions '新增', new_admin_hr_role_path, remote: true, class: 'ui green button' %>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+<div class="ui blue segment">
+  <table class="ui selectable striped celled table">
+    <tbody>
+      <% @roles.each_with_index do |role, i| %>
+        <% if i == 0 %><tr>
+        <%elsif (i % 4)== 0 %></tr><tr><%end%>
+            <td>
+                <span class="ui label basic <%= role.employees.exists? ? 'green': 'red' %> compacted"><%= role.name_cn %></span>
+                
+                <%= link_to edit_admin_hr_role_path(role), remote: true, data:{content: '编辑'}, class: 'popups' do%>
+                  <i class="icon edit"></i>
+                <%end%>
+                <%= link_to permission_admin_hr_role_path(role), data:{content: '分配操作权限'}, class: 'popups' do%>
+                  <i class="icon list"></i>
+                <%end%>
+                <%= link_to admin_hr_role_path(role), remote: true, data:{content: '员工列表'}, class: 'popups' do%>
+                  <i class="icon users"></i>
+                <%end%>
+            </td>
+      <% end %>
+      <%#= render partial: 'list', collection: @roles, as: :role %>
+    </tbody>
+  </table>
+</div>

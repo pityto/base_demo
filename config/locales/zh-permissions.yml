@@ -1,0 +1,33 @@
+zh:
+  permissions:
+    menu:
+      admin:
+        hr: 人事管理
+    controller:
+      admin:
+        hr:
+          employees: 员工管理
+          roles: 角色管理
+    operate:
+      manage:  '管理、菜单显示'
+      read:    '查看'
+      create:  '新增'
+      destroy: '删除'
+      update:  '修改'
+      admin:
+        hr:
+          employees:
+            role: 分配角色
+            update_role: 提交分配角色
+            create_traders: 分配撮合
+            create_leave_job: 离职
+            create_holiday: 离岗
+          roles:
+            permission: 分配权限
+            update_permission: 提交分配权限
+
+       
+        
+        
+        
+
