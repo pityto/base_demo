@@ -30,6 +30,11 @@ class CreateTables < ActiveRecord::Migration[5.0]
         t.string   "avatar",               limit: 100,                            comment: "员工头像"
         t.integer  "assign_count",                     default: 0,                comment: "分配点数"
         t.integer  "handover_id",                      default: 0,                comment: "交接人"
+        t.string  "current_sign_in_at",                default: "",               comment: "当前登录时间"
+        t.string  "current_sign_in_ip",                default: "",               comment: "当前登录ip"
+        t.string  "last_sign_in_at",                   default: "",               comment: "上次登录时间  "
+        t.string  "last_sign_in_ip",                   default: "",               comment: "上次登录ip"
+        t.integer  "sign_in_count",                    default: 0,                comment: "登录次数"
         t.index ["email"], name: "index_employees_on_email", unique: true, using: :btree
     end
 
