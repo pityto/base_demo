@@ -73,8 +73,4 @@ class Admin::Hr::RolesController < Admin::BaseController
     params.require(:role).permit(:name, :name_cn)
   end
 
-  # cancancan 定义的方法current_ability用到了current_user，这里手动声明这个method
-  def current_user
-    current_employee
-  end
 end

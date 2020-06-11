@@ -117,8 +117,26 @@ class Admin::Hr::EmployeesController < Admin::BaseController
     @employee = Employee.find(params[:id])
   end
 
-  def current_user
-    current_employee
+  def employee_params
+    p = params.require(:employee).permit(:name,
+                                         :email,
+                                         :password,
+                                         :password_confirmation,
+                                         :mobile,
+                                         :office_tel,
+                                         :position_id,
+                                         :position_level,
+                                         :department_id,
+                                         :deputy_department_id,
+                                         :joined_on,
+                                         :qq,
+                                         :dob,
+                                         :parent_id,
+                                         :avatar,
+                                         :weight,:trader_grade)
+    p[:name] = p[:name].to_s.strip
+    p[:email] = p[:email].to_s.strip
+    p
   end
-
+  
 end

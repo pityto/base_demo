@@ -3,7 +3,6 @@ PreReport::Application.routes.draw do
   namespace :admin do
     #人事管理
     namespace :hr do
-      root to: 'admin/hr/employees#desboart'
       #员工管理
       resources :employees, except: [:show, :destroy] do
         collection do
@@ -23,14 +22,6 @@ PreReport::Application.routes.draw do
           post :update_permission
         end
       end
-      #部门管理
-      resources :departments do
-        member do
-          get :get_sub_departments
-        end
-      end
-      #小组管理
-      resources :teams, except: :show
     end
     
   end
